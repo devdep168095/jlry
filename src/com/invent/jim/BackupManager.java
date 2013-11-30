@@ -1,5 +1,7 @@
 package com.invent.jim;
 
+import java.io.File;
+
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -43,4 +45,15 @@ public class BackupManager {
 	public static void importDatabase() {
 		Log.d(TAG, "importDatabase");
 	}
+	
+
+	private void searchFile() {
+		File file = new File("/data/data/com.invent.jim/databases/sugar_example.db");
+		if(file.exists()) {
+			Log.d(TAG, "It exists");
+		} else {
+			Log.d(TAG, "Does not exist");
+		}
+	}
+	
 }

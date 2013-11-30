@@ -1,17 +1,22 @@
 package com.invent.jim;
 
+import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.invent.jim.models.Purchase.DiamondPurchase;
 import com.invent.jim.models.Purchase.GoldPurchase;
 import com.invent.jim.models.Purchase.SilverPurchase;
+import com.invent.jim.models.Rate.GoldRate;
 import com.invent.jim.models.Sale.SaleGroup;
 
 public class DataManager {
 	private final static String TAG = "DataManager";
 	private static DataManager instance;
+	private static Context context;
 	
 	private int currentGoldRate;
 	private int currentSilverRate;
@@ -30,6 +35,10 @@ public class DataManager {
 		return instance;
 	}
 
+	public void setContext(Context context) {
+		this.context = context;
+	}
+	
 	/**
 	 * @return the currentGoldRate
 	 */
@@ -42,8 +51,15 @@ public class DataManager {
 	 */
 	public void setCurrentGoldRate(int currentGoldRate) {
 		this.currentGoldRate = currentGoldRate;
+		GoldRate rate = new GoldRate(this.context, currentGoldRate);
+		rate.save();		
+		List<GoldRate> allRates = GoldRate.listAll(GoldRate.class);
+		for (GoldRate goldRate : allRates) {
+			Log.d(TAG, goldRate.toString());
+		}
 	}
 
+	
 	/**
 	 * @return the currentSilverRate
 	 */

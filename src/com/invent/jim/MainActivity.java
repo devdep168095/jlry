@@ -8,6 +8,7 @@ import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,7 +19,8 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 public class MainActivity extends FragmentActivity implements ActionBar.OnNavigationListener {
-
+	private static final String TAG = "MainActivity";
+	
     /**
      * The serialization (saved instance state) Bundle key representing the
      * current dropdown position.
@@ -48,6 +50,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
                                 getString(R.string.title_section3),
                         }),
                 this);
+        DataManager.instance().setContext(this);
     }
 
     /**
@@ -91,6 +94,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
     public boolean onNavigationItemSelected(int position, long id) {
         // When the given dropdown item is selected, show its contents in the
         // container view.
+    	
         Fragment fragment = new DummySectionFragment();
         Bundle args = new Bundle();
         args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
@@ -98,6 +102,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, fragment)
                 .commit();
+        int rate = 100 + (int)(Math.random() * ((1000 - 100) + 1));
+        Log.d(TAG, "Setting gold rate: " + rate);
+        DataManager.instance().setCurrentGoldRate(rate);
+        
         return true;
     }
 
