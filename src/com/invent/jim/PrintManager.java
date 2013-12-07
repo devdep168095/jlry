@@ -1,5 +1,7 @@
 package com.invent.jim;
 
+import android.content.Context;
+import android.print.PrintDocumentAdapter;
 import android.util.Log;
 
 import com.invent.jim.models.Sale.SaleGroup;
@@ -13,6 +15,7 @@ public class PrintManager {
 	
 	public static void printSale(SaleGroup sale) {
 		Log.d(TAG, "printSale");
+
 	}
 	
 	

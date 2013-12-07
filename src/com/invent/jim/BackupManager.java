@@ -1,6 +1,15 @@
 package com.invent.jim;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+import com.dropbox.client2.DropboxAPI;
+import com.dropbox.client2.DropboxAPI.Entry;
+import com.dropbox.client2.android.AndroidAuthSession;
+import com.dropbox.client2.exception.DropboxException;
+import com.dropbox.client2.session.AppKeyPair;
+import com.dropbox.client2.session.Session.AccessType;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -10,7 +19,7 @@ public class BackupManager {
 	private static final String TAG = "BackupManager";
 	
 	private static Handler uiHandler = new Handler(Looper.getMainLooper());
-	
+
 	
 	public interface TaskCompleteCallback {
 		void complete(boolean success);
@@ -32,14 +41,15 @@ public class BackupManager {
 	 */
 	public static void backupDatabase(final TaskCompleteCallback callback) {
 		Log.d(TAG, "backupDatabase");
-		//TODO for now, it just returns success after 2 seconds
-		uiHandler.postDelayed(new Runnable() {
+
+		uiHandler.post(new Runnable() {
 			
 			@Override
 			public void run() {
+
 				callback.complete(true);				
 			}
-		}, 2000);
+		});
 	}
 	
 	public static void importDatabase() {
@@ -47,13 +57,17 @@ public class BackupManager {
 	}
 	
 
-	private void searchFile() {
+	private boolean searchFile() {
 		File file = new File("/data/data/com.invent.jim/databases/sugar_example.db");
 		if(file.exists()) {
 			Log.d(TAG, "It exists");
+			return true;
 		} else {
 			Log.d(TAG, "Does not exist");
+			return false;
 		}
 	}
+	
+
 	
 }

@@ -1,6 +1,5 @@
 package com.invent.jim;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,7 +35,7 @@ public class DataManager {
 	}
 
 	public void setContext(Context context) {
-		this.context = context;
+		DataManager.context = context;
 	}
 	
 	/**
@@ -51,7 +50,7 @@ public class DataManager {
 	 */
 	public void setCurrentGoldRate(int currentGoldRate) {
 		this.currentGoldRate = currentGoldRate;
-		GoldRate rate = new GoldRate(this.context, currentGoldRate);
+		GoldRate rate = new GoldRate(DataManager.context, currentGoldRate);
 		rate.save();		
 		List<GoldRate> allRates = GoldRate.listAll(GoldRate.class);
 		for (GoldRate goldRate : allRates) {
